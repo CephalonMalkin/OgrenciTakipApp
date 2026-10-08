@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="container py-4 text-center">
+    <div class="py-4">
+        <h1 class="display-6 fw-bold text-dark">Öğrenci Okuma Takip Sistemi</h1>
+        <p class="lead text-muted col-md-8 mx-auto">
+            Öğrencilerin günlük kitap okuma alışkanlıklarını takip etmek ve sınıf gelişimini izlemek için geliştirilmiş platform.
+        </p>
+    </div>
+
+    <div class="row justify-content-center g-3 mt-1">
+        <!-- Veli Kartı -->
+        <div class="col-12 col-md-5">
+            <div class="card h-100 shadow-sm border-0 border-top border-primary border-4 p-3">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="fs-1 mb-2">👨‍👩‍👧</div>
+                    <h5 class="card-title fw-bold">Veli Giriş Paneli</h5>
+                    <p class="card-text text-muted small flex-grow-1">
+                        Öğrenci numarası ve 4 haneli PIN ile giriş yapıp bugünkü okuma görevini tek tıkla onaylayın.
+                    </p>
+                    <a asp-controller="Parent" asp-action="Login" class="btn btn-primary w-100 mt-3 py-2 fw-semibold">
+                        Veli Olarak Giriş Yap
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Öğretmen Kartı -->
+        <div class="col-12 col-md-5">
+            <div class="card h-100 shadow-sm border-0 border-top border-dark border-4 p-3">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="fs-1 mb-2">🧑‍🏫</div>
+                    <h5 class="card-title fw-bold">Öğretmen Paneli</h5>
+                    <p class="card-text text-muted small flex-grow-1">
+                        Sınıf listesini inceleyin, geçmiş günlerin okuma kayıtlarını listeleyin ve yeni öğrenci ekleyin.
+                    </p>
+                    <a asp-controller="Teacher" asp-action="Login" class="btn btn-dark w-100 mt-3 py-2 fw-semibold">
+                        Öğretmen Olarak Giriş Yap
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

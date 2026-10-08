@@ -1,0 +1,87 @@
+@model OgrenciTakipApp.Models.Student
+
+@{
+    ViewData["Title"] = "Öğrenci Durumu";
+    bool hasReadToday = ViewBag.HasReadToday ?? false;
+    string today = ViewBag.Today ?? DateTime.Today.ToString("dd.MM.yyyy");
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <!-- Öğrenci Ana Bilgi & Onay Kartı -->
+            <div class="card shadow border-0">
+                <div class="card-body text-center p-4">
+                    <h3 class="card-title text-info fw-bold mb-1">@Model.FullName</h3>
+                    <p class="text-white mb-4">Okul No: <strong class="text-warning">@Model.StudentNumber</strong></p>
+
+                    <!-- Tarih ve Durum Bilgi Kutusu -->
+<div class="p-3 mb-4 rounded-4" style="background: rgba(11, 15, 25, 0.85); border: 1px solid @(hasReadToday ? "rgba(16, 185, 129, 0.45)" : "rgba(245, 158, 11, 0.45)"); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);">
+    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);">
+        <span class="text-info">📅</span>
+        <span class="fw-bold text-white small">Tarih: @today</span>
+    </div>
+
+    @if (hasReadToday)
+    {
+        <h5 class="fw-bold text-success mt-2 mb-1">✔ Bugünün okuma görevi tamamlandı!</h5>
+        <p class="text-white-50 small mb-0">Tebrikler, düzenli okuma alışkanlığı başarının anahtarıdır.</p>
+    }
+    else
+    {
+        <h5 class="fw-bold text-warning mt-2 mb-1">⏳ Bugün henüz okuma yapılmadı</h5>
+        <p class="text-white-50 small mb-0">Çocuğunuz kitabını okuduysa aşağıdaki butona basarak onaylayabilirsiniz.</p>
+    }
+</div>
+
+                    @if (!hasReadToday)
+                    {
+                        <form asp-action="MarkAsRead" method="post">
+                            <input type="hidden" name="studentId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-success btn-lg px-4 py-3 shadow">
+                                📖 Bugün Kitap Okundu Olarak İşaretle
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="btn btn-secondary btn-lg px-4 py-3 disabled opacity-50" disabled>
+                            ✔ Görev Tamamlandı
+                        </button>
+                    }
+
+                    <div class="mt-4 pt-3 border-top border-secondary">
+                        <a asp-action="Login" class="btn btn-outline-secondary btn-sm">Çıkış Yap</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Geçmiş Okuma Kayıtları (Kaydırılabilir Liste) -->
+            <div class="card shadow border-0 mt-4">
+                <div class="card-header border-bottom border-secondary py-3">
+                    <h6 class="mb-0 text-white fw-bold">📖 Son Okuma Kayıtları</h6>
+                </div>
+                
+                <!-- İşte kaydırılabilir özel bar alanı -->
+                <div class="scrollable-history">
+                    <ul class="list-group list-group-flush bg-transparent">
+                        @if (Model.DailyReadings != null && Model.DailyReadings.Any())
+                        {
+                            @foreach (var record in Model.DailyReadings.OrderByDescending(r => r.ReadingDate))
+                            {
+                                <li class="list-group-item bg-transparent text-white border-secondary d-flex justify-content-between align-items-center py-3">
+                                    <span class="fw-semibold">📅 @record.ReadingDate.ToString("dd.MM.yyyy")</span>
+                                    <span class="badge bg-success rounded-pill px-3 py-2">Okundu</span>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="list-group-item bg-transparent text-white opacity-75 text-center py-4">Henüz geçmiş okuma kaydı bulunmuyor.</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

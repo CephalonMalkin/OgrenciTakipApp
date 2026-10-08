@@ -1,0 +1,483 @@
+/* ==========================================================================
+   1. GLOBAL TEMA DEĞİŞKENLERİ
+   ========================================================================== */
+:root {
+    /* Varsayılan Dark Tema */
+    --bg-main: #060913;
+    --card-bg: rgba(15, 23, 42, 0.92);
+    --card-border: rgba(255, 255, 255, 0.18);
+    --text-primary: #ffffff;
+    --text-muted-custom: #cbd5e1;
+    --navbar-bg: rgba(6, 9, 19, 0.95);
+    --input-bg: rgba(11, 15, 25, 0.9);
+    --input-border: rgba(255, 255, 255, 0.25);
+    --grid-line: rgba(255, 255, 255, 0.04);
+}
+
+[data-bs-theme="light"] {
+    /* Light Tema */
+    --bg-main: #f1f5f9;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --card-border: rgba(15, 23, 42, 0.12);
+    --text-primary: #0f172a;
+    --text-muted-custom: #475569;
+    --navbar-bg: #ffffff;
+    --input-bg: #ffffff;
+    --input-border: #cbd5e1;
+    --grid-line: rgba(15, 23, 42, 0.05);
+}
+
+/* ==========================================================================
+   2. GÖVDE VE SİBER ARKA PLAN
+   ========================================================================== */
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    letter-spacing: -0.015em;
+    overflow-x: hidden;
+    color: var(--text-primary) !important;
+    background-color: var(--bg-main) !important;
+    background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-attachment: fixed;
+    position: relative;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    background-image: 
+        radial-gradient(4px 4px at 15% 25%, #10b981 50%, transparent),
+        radial-gradient(6px 6px at 35% 65%, #06b6d4 50%, transparent),
+        radial-gradient(3px 3px at 75% 15%, #38bdf8 50%, transparent),
+        radial-gradient(5px 5px at 85% 75%, #34d399 50%, transparent),
+        radial-gradient(7px 7px at 50% 40%, rgba(6, 182, 212, 0.7) 50%, transparent);
+    background-size: 600px 600px;
+    animation: particleDriftSlow 20s linear infinite;
+    opacity: 0.65;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    background-image: 
+        radial-gradient(5px 5px at 20% 80%, #06b6d4 50%, transparent),
+        radial-gradient(4px 4px at 60% 30%, #10b981 50%, transparent),
+        radial-gradient(8px 8px at 80% 50%, rgba(16, 185, 129, 0.6) 50%, transparent),
+        radial-gradient(3px 3px at 40% 90%, #38bdf8 50%, transparent);
+    background-size: 800px 800px;
+    animation: particleDriftFast 13s linear infinite;
+    opacity: 0.55;
+}
+
+@keyframes particleDriftSlow {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-600px) rotate(15deg); }
+}
+
+@keyframes particleDriftFast {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-800px) rotate(-20deg); }
+}
+
+/* ==========================================================================
+   3. NAVBAR & TEMA BUTONU (TEMAYA TAM DUYARLI)
+   ========================================================================== */
+
+/* DARK TEMA: Koyu Cam Zemin, Beyaz Yazılar */
+.navbar {
+    background-color: rgba(6, 9, 19, 0.95) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.navbar .nav-link {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+#themeToggleBtn {
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    cursor: pointer;
+}
+
+#themeToggleBtn #themeText,
+#themeToggleBtn #themeIcon {
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+/* LIGHT TEMA: Beyaz Zemin, Koyu Yazılar */
+[data-bs-theme="light"] .navbar {
+    background-color: #ffffff !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid #cbd5e1 !important;
+}
+
+[data-bs-theme="light"] .navbar .nav-link {
+    color: #0f172a !important;
+    font-weight: 600;
+}
+
+[data-bs-theme="light"] #themeToggleBtn {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+[data-bs-theme="light"] #themeToggleBtn #themeText,
+[data-bs-theme="light"] #themeToggleBtn #themeIcon {
+    color: #0f172a !important;
+}
+
+/* ==========================================================================
+   4. KARTLAR VE GENEL YAZILAR
+   ========================================================================== */
+.card {
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border) !important;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    color: var(--text-primary);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(56, 189, 248, 0.5) !important;
+}
+
+.card-header {
+    background: transparent !important;
+    border-bottom: 1px solid var(--card-border) !important;
+}
+
+/* Başlıklar (Dark Mod) */
+.display-4, .display-5, .display-6,
+h1, h2, h3, h4, h5, h6,
+.card-title,
+.card-header h5 {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+}
+
+/* Başlıklar (Light Mod) */
+[data-bs-theme="light"] .display-4,
+[data-bs-theme="light"] .display-5,
+[data-bs-theme="light"] .display-6,
+[data-bs-theme="light"] h1, 
+[data-bs-theme="light"] h2, 
+[data-bs-theme="light"] h3, 
+[data-bs-theme="light"] h4, 
+[data-bs-theme="light"] h5, 
+[data-bs-theme="light"] h6,
+[data-bs-theme="light"] .card-title,
+[data-bs-theme="light"] .card-header h5 {
+    color: #0f172a !important;
+    text-shadow: none !important;
+    -webkit-text-fill-color: #0f172a !important;
+}
+
+/* ==========================================================================
+   5. ÖĞRETMEN PANELİ DARK MOD DÜZELTMELERİ
+   ========================================================================== */
+/* "Sınıf Listesi & Okuma Durumu" Başlığı */
+.card-header h5, 
+.card h5.text-primary,
+.card h4.text-primary {
+    color: #38bdf8 !important; /* Siber açık mavi ile net okunur */
+    -webkit-text-fill-color: #38bdf8 !important;
+    text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+[data-bs-theme="light"] .card-header h5,
+[data-bs-theme="light"] .card h5.text-primary,
+[data-bs-theme="light"] .card h4.text-primary {
+    color: #0284c7 !important;
+    -webkit-text-fill-color: #0284c7 !important;
+    text-shadow: none !important;
+}
+
+/* "İncelenen Gün" Yazısı ve Form Etiketleri */
+label, 
+.form-label, 
+.input-group-text,
+p.text-muted,
+span.text-muted,
+.text-muted {
+    color: #e2e8f0 !important;
+    font-weight: 600;
+}
+
+[data-bs-theme="light"] label, 
+[data-bs-theme="light"] .form-label, 
+[data-bs-theme="light"] .input-group-text,
+[data-bs-theme="light"] p.text-muted,
+[data-bs-theme="light"] span.text-muted,
+[data-bs-theme="light"] .text-muted {
+    color: #475569 !important;
+}
+
+/* Tarih Seçme Kutusu (Dark ve Light) */
+input[type="date"],
+.form-control, 
+.form-select {
+    background-color: var(--input-bg) !important;
+    border: 1px solid var(--input-border) !important;
+    color: var(--text-primary) !important;
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    font-weight: 600;
+}
+
+/* Dark modda tarih kutusunun içi ve takvim ikonu */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+[data-bs-theme="light"] input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: none;
+    opacity: 0.8;
+}
+
+/* ==========================================================================
+   6. VELİ PANELİ LIGHT MOD DÜZELTMELERİ
+   ========================================================================== */
+/* Öğrenci adı altındaki "Öğrenci No: 103" Kısmı */
+[data-bs-theme="light"] .text-white,
+[data-bs-theme="light"] .text-white-50,
+[data-bs-theme="light"] .text-light,
+[data-bs-theme="light"] p.lead,
+[data-bs-theme="light"] span.badge.bg-dark {
+    color: #0f172a !important;
+}
+
+/* Veli Panelinde "Son Okuma Kayıtları" Listesi ve Tüm Satırlar */
+[data-bs-theme="light"] .scrollable-history,
+[data-bs-theme="light"] .list-group,
+[data-bs-theme="light"] .list-group-item {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+[data-bs-theme="light"] .scrollable-history div,
+[data-bs-theme="light"] .scrollable-history span,
+[data-bs-theme="light"] .scrollable-history p,
+[data-bs-theme="light"] .list-group-item * {
+    color: #0f172a !important;
+}
+
+/* Son Okuma Kayıtlarındaki Tarih / Saat ve Detay Yazıları */
+[data-bs-theme="light"] .scrollable-history .small,
+[data-bs-theme="light"] .scrollable-history .text-white-50,
+[data-bs-theme="light"] .scrollable-history .text-muted {
+    color: #64748b !important;
+}
+
+/* Okundu rozeti / badge yeşil kalsın ve beyaz yazısı korunsun */
+.badge.bg-success,
+[data-bs-theme="light"] .badge.bg-success {
+    background-color: #10b981 !important;
+    color: #ffffff !important;
+}
+
+.badge.bg-danger,
+[data-bs-theme="light"] .badge.bg-danger {
+    background-color: #ef4444 !important;
+    color: #ffffff !important;
+}
+
+/* ==========================================================================
+   7. TABLO RENKLERİ (ÖĞRETMEN PANELİ)
+   ========================================================================== */
+.table {
+    color: #e2e8f0 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    background: transparent !important;
+}
+
+.table th {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #38bdf8 !important;
+    font-weight: 700 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.table td {
+    color: #ffffff !important;
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    vertical-align: middle;
+}
+
+[data-bs-theme="light"] .table {
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+
+[data-bs-theme="light"] .table th {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+    border-bottom: 2px solid #94a3b8 !important;
+}
+
+[data-bs-theme="light"] .table td {
+    color: #0f172a !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* ==========================================================================
+   8. BUTONLAR VE LİNKLER
+   ========================================================================== */
+.btn {
+    border-radius: 12px;
+    font-weight: 700;
+    padding: 0.65rem 1.3rem;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btn:active {
+    transform: scale(0.96) !important;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    border: none;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    color: #ffffff !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #06b6d4, #0284c7) !important;
+    border: none;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+    color: #ffffff !important;
+}
+
+.btn-outline-primary {
+    border-color: rgba(6, 182, 212, 0.7);
+    color: #38bdf8;
+    background: rgba(6, 182, 212, 0.1);
+}
+
+.btn-outline-danger {
+    border-color: rgba(239, 68, 68, 0.7);
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+a {
+    color: #38bdf8 !important;
+    text-decoration: none;
+}
+
+[data-bs-theme="light"] a {
+    color: #0284c7 !important;
+}
+
+/* ==========================================================================
+   9. SCROLLBAR VE FOOTER
+   ========================================================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(11, 15, 25, 0.8);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #10b981, #06b6d4);
+    border-radius: 8px;
+}
+
+.scrollable-history {
+    max-height: 380px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 6px;
+}
+
+footer, 
+footer.border-top,
+.footer {
+    border-top: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--text-muted-custom) !important;
+    padding: 1.5rem 0 !important;
+}
+
+/* ==========================================================================
+   ÖĞRETMEN PANELİ SON RÖTUŞLAR (YALNIZCA HEDEFLENEN YERLER)
+   ========================================================================== */
+
+/* 1. Tarih inputu içindeki 02.10.2026 sayıları ve takvim ikonu */
+input[type="date"] {
+    color: #38bdf8 !important;              /* Neon siber mavi ile net parlar */
+    -webkit-text-fill-color: #38bdf8 !important;
+    background-color: #0b0f19 !important;
+    border-color: rgba(56, 189, 248, 0.4) !important;
+}
+
+[data-bs-theme="light"] input[type="date"] {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+
+/* 2. Sınıf Listesi & Okuma Durumu başlığının arkada kaybolmasını önleme */
+.card-header h4,
+.card-header h5,
+.card-header .card-title {
+    color: #38bdf8 !important;
+    -webkit-text-fill-color: #38bdf8 !important;
+    background: none !important;
+    opacity: 1 !important;
+}
+
+[data-bs-theme="light"] .card-header h4,
+[data-bs-theme="light"] .card-header h5,
+[data-bs-theme="light"] .card-header .card-title {
+    color: #0284c7 !important;
+    -webkit-text-fill-color: #0284c7 !important;
+}
+
+/* 3. Footer'ın tablonun üstüne binmesini önleme & sağ alta kaydırma */
+footer,
+.footer {
+    position: relative !important;
+    margin-top: 3rem !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    text-align: right !important;
+    font-size: 0.75rem !important;
+    opacity: 0.7 !important;
+}

@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Veli Girişi";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h4 class="mb-0">Öğrenci Okuma Takip Sistemi</h4>
+                <small>Veli Giriş Paneli</small>
+            </div>
+            <div class="card-body p-4">
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <form asp-action="Login" method="post">
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">Öğrenci Numarası</label>
+                        <input type="text" name="studentNumber" class="form-control form-control-lg" placeholder="Örn: 101" required autofocus />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label font-weight-bold">4 Haneli Erişim PIN Kodu</label>
+                        <input type="password" name="accessPin" maxlength="4" class="form-control form-control-lg" placeholder="****" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm">
+                        Giriş Yap
+                    </button>
+                </form>
+            </div>
+            <div class="card-footer text-muted text-center py-2 bg-light">
+                <small>Öğretmen girişi için ana menüyü kullanabilirsiniz.</small>
+            </div>
+        </div>
+    </div>
+</div>

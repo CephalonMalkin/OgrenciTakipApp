@@ -1,0 +1,49 @@
+@model OgrenciTakipApp.Models.Student
+
+@{
+    ViewData["Title"] = "Yeni Öğrenci Ekle";
+    int teacherId = ViewBag.TeacherId ?? 0;
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-success text-white py-3">
+                    <h5 class="mb-0">Yeni Öğrenci Kaydı</h5>
+                </div>
+                <div class="card-body p-3 p-md-4">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger py-2 small" role="alert">
+                            @ViewBag.Error
+                        </div>
+                    }
+
+                    <form asp-action="CreateStudent" method="post">
+                        <input type="hidden" name="TeacherId" value="@teacherId" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Öğrenci Ad Soyad</label>
+                            <input type="text" name="FullName" class="form-control" placeholder="Örn: Mehmet Can" required autofocus />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Okul Numarası</label>
+                            <input type="text" name="StudentNumber" class="form-control" placeholder="Örn: 104" required />
+                        </div>
+
+                        <div class="alert alert-light border small text-muted mb-4 py-2">
+                            ℹ️ Velinin giriş yapacağı <strong>4 haneli PIN kodu</strong> sistem tarafından otomatik olarak üretilecek ve sınıf listesinde görüntülenecektir.
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success flex-grow-1">Öğrenciyi Kaydet</button>
+                            <a asp-action="Dashboard" asp-route-teacherId="@teacherId" class="btn btn-outline-secondary">İptal</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
